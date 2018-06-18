@@ -1,3 +1,7 @@
+Upcoming version
+=======================
+x tvdb: load poster instead of banner in the search window
+
 Version 2.9.12
 =======================
 x display Kodi scrapers at the end of the list
