@@ -1,6 +1,7 @@
 Upcoming version
 =======================
 x tvdb: load poster instead of banner in the search window
+x fixed displaying of the clear trakt button
 
 Version 2.9.12
 =======================
