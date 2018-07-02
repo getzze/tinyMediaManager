@@ -116,7 +116,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 /**
  * The main class for movies.
- * 
+ *
  * @author Manuel Laggner / Myron Boyle
  */
 public class Movie extends MediaEntity {
@@ -152,7 +152,7 @@ public class Movie extends MediaEntity {
   private Date                                  releaseDate                = null;
   @JsonProperty
   private boolean                               multiMovieDir              = false;                               // we detected more movies in
-                                                                                                                  // same folder
+  // same folder
   @JsonProperty
   private int                                   top250                     = 0;
   @JsonProperty
@@ -202,7 +202,7 @@ public class Movie extends MediaEntity {
    * Overwrites all null/empty elements with "other" value (but might be also empty)<br>
    * For lists, check with 'contains' and add.<br>
    * Do NOT merge path, dateAdded, scraped, mediaFiles and other crucial properties!
-   * 
+   *
    * @param other
    */
 
@@ -273,7 +273,7 @@ public class Movie extends MediaEntity {
    * checks if this movie has been scraped.<br>
    * On a fresh DB, just reading local files, everything is again "unscraped". <br>
    * detect minimum of filled values as "scraped"
-   * 
+   *
    * @return isScraped
    */
   @Override
@@ -281,9 +281,30 @@ public class Movie extends MediaEntity {
     return scraped || getHasMetadata();
   }
 
+  @Override
+  public void setPath(String newValue) {
+    super.setPath(newValue);
+
+    String path = getPathNIO().toString();
+
+    // re-set all entity roots of persons
+    for (MovieActor a : getActors()) {
+      if (a.getEntityRoot().isEmpty()) {
+        a.setEntityRoot(path);
+        a.setThumbPath("");
+      }
+    }
+    for (MovieProducer a : getProducers()) {
+      if (a.getEntityRoot().isEmpty()) {
+        a.setEntityRoot(path);
+        a.setThumbPath("");
+      }
+    }
+  }
+
   /**
    * Gets the sort title.
-   * 
+   *
    * @return the sort title
    */
   public String getSortTitle() {
@@ -292,7 +313,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the sort title.
-   * 
+   *
    * @param newValue
    *          the new sort title
    */
@@ -305,7 +326,7 @@ public class Movie extends MediaEntity {
   /**
    * Returns the sortable variant of title<br>
    * eg "The Bourne Legacy" -> "Bourne Legacy, The".
-   * 
+   *
    * @return the title in its sortable format
    */
   public String getTitleSortable() {
@@ -321,7 +342,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the checks for nfo file.
-   * 
+   *
    * @return the checks for nfo file
    */
   public Boolean getHasNfoFile() {
@@ -337,7 +358,7 @@ public class Movie extends MediaEntity {
    * doe we have basic metadata filled?<br>
    * like plot and year to take another fields into account always produces false positives (there are documentaries out there, which do not have
    * actors or either a producer in the meta data DBs..)
-   * 
+   *
    * @return true/false
    */
   public Boolean getHasMetadata() {
@@ -351,7 +372,7 @@ public class Movie extends MediaEntity {
    * Gets the check mark for images.<br>
    * Assumes true, but when PosterFilename is set and we do not have a poster, return false<br>
    * same for fanarts.
-   * 
+   *
    * @return the checks for images
    */
   public Boolean getHasImages() {
@@ -368,7 +389,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the checks for trailer.
-   * 
+   *
    * @return the checks for trailer
    */
   public Boolean getHasTrailer() {
@@ -386,7 +407,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the title for ui.
-   * 
+   *
    * @return the title for ui
    */
   public String getTitleForUi() {
@@ -421,7 +442,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Adds the actor.
-   * 
+   *
    * @param obj
    *          the obj
    */
@@ -437,7 +458,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the trailers
-   * 
+   *
    * @return the trailers
    */
   public List<MovieTrailer> getTrailer() {
@@ -446,7 +467,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Adds the trailer.
-   * 
+   *
    * @param obj
    *          the obj
    */
@@ -465,7 +486,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Adds the to tags.
-   * 
+   *
    * @param newTag
    *          the new tag
    */
@@ -487,7 +508,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Removes the from tags.
-   * 
+   *
    * @param removeTag
    *          the remove tag
    */
@@ -499,7 +520,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the tags.
-   * 
+   *
    * @param newTags
    *          the new tags
    */
@@ -548,7 +569,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the tag as string.
-   * 
+   *
    * @return the tag as string
    */
   public String getTagsAsString() {
@@ -564,7 +585,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the tags.
-   * 
+   *
    * @return the tags
    */
   public List<String> getTags() {
@@ -573,7 +594,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the data source.
-   * 
+   *
    * @return the data source
    */
   public String getDataSource() {
@@ -582,7 +603,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the data source.
-   * 
+   *
    * @param newValue
    *          the new data source
    */
@@ -592,7 +613,9 @@ public class Movie extends MediaEntity {
     firePropertyChange(DATA_SOURCE, oldValue, newValue);
   }
 
-  /** has movie local (or any mediafile inline) subtitles? */
+  /**
+   * has movie local (or any mediafile inline) subtitles?
+   */
   public boolean hasSubtitles() {
     if (this.subtitles) {
       return true; // local ones found
@@ -611,14 +634,16 @@ public class Movie extends MediaEntity {
     return false;
   }
 
-  /** set subtitles */
+  /**
+   * set subtitles
+   */
   public void setSubtitles(boolean sub) {
     this.subtitles = sub;
   }
 
   /**
    * Searches for actor images, and matches them to our "actors", updating the thumb url
-   * 
+   *
    * @deprecated thumbPath is generated dynamic - no need for storage
    */
   @Deprecated
@@ -649,7 +674,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the actors.
-   * 
+   *
    * @return the actors
    */
   public List<MovieActor> getActors() {
@@ -658,7 +683,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the director.
-   * 
+   *
    * @return the director
    */
   public String getDirector() {
@@ -667,7 +692,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the imdb id.
-   * 
+   *
    * @return the imdb id
    */
   public String getImdbId() {
@@ -676,7 +701,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the tmdb id.
-   * 
+   *
    * @return the tmdb id
    */
   public int getTmdbId() {
@@ -685,7 +710,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the tmdb id.
-   * 
+   *
    * @param newValue
    *          the new tmdb id
    */
@@ -695,7 +720,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the TraktTV id.
-   * 
+   *
    * @return the TraktTV id
    */
   public int getTraktId() {
@@ -704,7 +729,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the TraktTV id.
-   * 
+   *
    * @param newValue
    *          the new TraktTV id
    */
@@ -714,7 +739,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the runtime in minutes
-   * 
+   *
    * @return the runtime
    */
   public int getRuntime() {
@@ -727,7 +752,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the tagline.
-   * 
+   *
    * @return the tagline
    */
   public String getTagline() {
@@ -736,7 +761,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the writer.
-   * 
+   *
    * @return the writer
    */
   public String getWriter() {
@@ -745,7 +770,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Checks for file.
-   * 
+   *
    * @param filename
    *          the filename
    * @return true, if successful
@@ -766,7 +791,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Removes the actor.
-   * 
+   *
    * @param obj
    *          the obj
    */
@@ -777,7 +802,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the extra thumbs.
-   * 
+   *
    * @return the extra thumbs
    */
   public List<String> getExtraThumbs() {
@@ -786,7 +811,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the extra thumbs.
-   * 
+   *
    * @param extraThumbs
    *          the new extra thumbs
    */
@@ -798,7 +823,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the extra fanarts.
-   * 
+   *
    * @return the extra fanarts
    */
   public List<String> getExtraFanarts() {
@@ -807,7 +832,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the extra fanarts.
-   * 
+   *
    * @param extraFanarts
    *          the new extra fanarts
    */
@@ -819,7 +844,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the imdb id.
-   * 
+   *
    * @param newValue
    *          the new imdb id
    */
@@ -829,7 +854,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the metadata.
-   * 
+   *
    * @param metadata
    *          the new metadata
    * @param config
@@ -1028,7 +1053,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the trailers; first one is "inNFO" if not a local one.
-   * 
+   *
    * @param trailers
    *          the new trailers
    */
@@ -1116,7 +1141,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the metadata.
-   * 
+   *
    * @return the metadata
    */
   public MediaMetadata getMetadata() {
@@ -1145,7 +1170,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the artwork.
-   * 
+   *
    * @param md
    *          the md
    * @param config
@@ -1157,7 +1182,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the artwork.
-   * 
+   *
    * @param artwork
    *          the artwork
    * @param config
@@ -1171,7 +1196,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the actors.
-   * 
+   *
    * @param newActors
    *          the new actors
    */
@@ -1258,7 +1283,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the runtime in minutes
-   * 
+   *
    * @param newValue
    *          the new runtime
    */
@@ -1270,7 +1295,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the tagline.
-   * 
+   *
    * @param newValue
    *          the new tagline
    */
@@ -1282,7 +1307,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the year.
-   * 
+   *
    * @param newValue
    *          the new year
    */
@@ -1296,7 +1321,7 @@ public class Movie extends MediaEntity {
 
   /**
    * all XBMC supported NFO names. (without path!)
-   * 
+   *
    * @param nfo
    *          the nfo
    * @return the nfo filename
@@ -1318,7 +1343,7 @@ public class Movie extends MediaEntity {
 
   /**
    * all XBMC supported NFO names. (without path!)
-   * 
+   *
    * @param nfo
    *          the nfo filenaming
    * @param newMovieFilename
@@ -1380,7 +1405,7 @@ public class Movie extends MediaEntity {
   /**
    * get trailer name (w/o extension)<br>
    * &lt;moviefile&gt;-trailer.ext
-   * 
+   *
    * @return the trailer basename
    */
   public String getTrailerBasename() {
@@ -1436,7 +1461,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the director.
-   * 
+   *
    * @param newValue
    *          the new director
    */
@@ -1448,7 +1473,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the writer.
-   * 
+   *
    * @param newValue
    *          the new writer
    */
@@ -1460,7 +1485,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the genres.
-   * 
+   *
    * @return the genres
    */
   public List<MediaGenres> getGenres() {
@@ -1469,7 +1494,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Adds the genre.
-   * 
+   *
    * @param newValue
    *          the new value
    */
@@ -1486,7 +1511,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the genres.
-   * 
+   *
    * @param newGenres
    *          the new genres
    */
@@ -1539,7 +1564,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Removes the genre.
-   * 
+   *
    * @param genre
    *          the genre
    */
@@ -1554,7 +1579,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the certifications.
-   * 
+   *
    * @return the certifications
    */
   public Certification getCertification() {
@@ -1563,7 +1588,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the certifications.
-   * 
+   *
    * @param newValue
    *          the new certifications
    */
@@ -1574,7 +1599,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the checks for rating.
-   * 
+   *
    * @return the checks for rating
    */
   public boolean getHasRating() {
@@ -1586,7 +1611,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the genres as string.
-   * 
+   *
    * @return the genres as string
    */
   public String getGenresAsString() {
@@ -1602,7 +1627,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Checks if is watched.
-   * 
+   *
    * @return true, if is watched
    */
   public boolean isWatched() {
@@ -1611,7 +1636,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the watched.
-   * 
+   *
    * @param newValue
    *          the new watched
    */
@@ -1624,7 +1649,7 @@ public class Movie extends MediaEntity {
   /**
    * Checks if this movie is in a folder with other movies and not in an own folder<br>
    * so disable everything except renaming
-   * 
+   *
    * @return true, if in datasource root
    */
   public boolean isMultiMovieDir() {
@@ -1634,7 +1659,7 @@ public class Movie extends MediaEntity {
   /**
    * Sets the flag, that the movie is not in an own folder<br>
    * so disable everything except renaming
-   * 
+   *
    * @param multiDir
    *          true/false
    */
@@ -1646,7 +1671,7 @@ public class Movie extends MediaEntity {
    * <p>
    * Uses <code>ReflectionToStringBuilder</code> to generate a <code>toString</code> for the specified object.
    * </p>
-   * 
+   *
    * @return the String result
    * @see ReflectionToStringBuilder#toString(Object)
    */
@@ -1657,7 +1682,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Gets the movie set.
-   * 
+   *
    * @return the movieset
    */
   public MovieSet getMovieSet() {
@@ -1666,7 +1691,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Sets the movie set.
-   * 
+   *
    * @param newValue
    *          the new movie set
    */
@@ -1708,7 +1733,7 @@ public class Movie extends MediaEntity {
 
   /**
    * is this a disc movie folder (video_ts / bdmv)?.
-   * 
+   *
    * @return true, if is disc
    */
   public boolean isDisc() {
@@ -1717,7 +1742,7 @@ public class Movie extends MediaEntity {
 
   /**
    * is this a disc movie folder (video_ts / bdmv)?.
-   * 
+   *
    * @param isDisc
    *          the new disc
    */
@@ -1976,7 +2001,7 @@ public class Movie extends MediaEntity {
 
   /**
    * get the first video file for this entity
-   * 
+   *
    * @return the first video file
    */
   public MediaFile getFirstVideoFile() {
@@ -1989,7 +2014,7 @@ public class Movie extends MediaEntity {
 
   /**
    * gets the basename (without stacking)
-   * 
+   *
    * @return the video base name (without stacking)
    */
   public String getVideoBasenameWithoutStacking() {
@@ -2093,7 +2118,7 @@ public class Movie extends MediaEntity {
 
   /**
    * Is the movie "stacked" (more than one video file)
-   * 
+   *
    * @return true if the movie is stacked; false otherwise
    */
   public boolean isStacked() {
