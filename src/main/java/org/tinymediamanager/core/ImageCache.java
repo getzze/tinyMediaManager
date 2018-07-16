@@ -305,7 +305,7 @@ public class ImageCache {
         else {
           // portrait
           if (originalImage.getHeight() > 300) {
-            desiredWidth = 300;
+            desiredWidth = 300 * originalImage.getWidth() / originalImage.getHeight();
           }
         }
       }
