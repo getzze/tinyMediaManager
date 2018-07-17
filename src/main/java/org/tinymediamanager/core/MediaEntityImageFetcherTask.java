@@ -169,6 +169,16 @@ public class MediaEntityImageFetcherTask implements Runnable {
               entity.setArtwork(destFile, MediaFileType.getMediaFileType(type));
               entity.callbackForWrittenArtwork(type);
               entity.saveToDb();
+
+              // build up image cache
+              if (Settings.getInstance().isImageCache()) {
+                try {
+                  ImageCache.cacheImage(destFile);
+                }
+                catch (Exception ignored) {
+                }
+              }
+
               break;
 
             default:
@@ -201,9 +211,20 @@ public class MediaEntityImageFetcherTask implements Runnable {
             case DISC:
             case LOGO:
             case CLEARLOGO:
-              entity.setArtwork(Paths.get(oldFilename), MediaFileType.getMediaFileType(type));
+              Path oldFile = Paths.get(oldFilename);
+              entity.setArtwork(oldFile, MediaFileType.getMediaFileType(type));
               entity.callbackForWrittenArtwork(type);
               entity.saveToDb();
+
+              // build up image cache
+              if (Settings.getInstance().isImageCache()) {
+                try {
+                  ImageCache.cacheImage(oldFile);
+                }
+                catch (Exception ignored) {
+                }
+              }
+
               break;
 
             default:

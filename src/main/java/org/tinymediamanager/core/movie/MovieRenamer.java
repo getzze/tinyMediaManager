@@ -43,6 +43,7 @@ import org.tinymediamanager.core.MediaSource;
 import org.tinymediamanager.core.Message;
 import org.tinymediamanager.core.Message.MessageLevel;
 import org.tinymediamanager.core.MessageManager;
+import org.tinymediamanager.core.Settings;
 import org.tinymediamanager.core.Utils;
 import org.tinymediamanager.core.entities.MediaFile;
 import org.tinymediamanager.core.entities.MediaFileSubtitle;
@@ -510,7 +511,7 @@ public class MovieRenamer {
     needed.addAll(movie.getMediaFiles(MediaFileType.SUBTITLE));
 
     // ######################################################################
-    // ## invalidade image cache
+    // ## invalidate image cache
     // ######################################################################
     for (MediaFile gfx : movie.getMediaFiles()) {
       if (gfx.isGraphic()) {
@@ -594,6 +595,21 @@ public class MovieRenamer {
           }
         }
         catch (IOException ignored) {
+        }
+      }
+    }
+
+    // ######################################################################
+    // ## build up image cache
+    // ######################################################################
+    if (Settings.getInstance().isImageCache()) {
+      for (MediaFile gfx : movie.getMediaFiles()) {
+        if (gfx.isGraphic()) {
+          try {
+            ImageCache.cacheImage(gfx.getFileAsPath());
+          }
+          catch (Exception ignored) {
+          }
         }
       }
     }
