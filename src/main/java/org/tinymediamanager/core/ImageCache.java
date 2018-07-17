@@ -298,14 +298,14 @@ public class ImageCache {
         // decide the scale-side depending on the aspect ratio
         if (((float) originalImage.getWidth()) / ((float) originalImage.getHeight()) > 1) {
           // landscape
-          if (originalImage.getWidth() > 300) {
-            desiredWidth = 300;
+          if (originalImage.getWidth() > 400) {
+            desiredWidth = 400;
           }
         }
         else {
           // portrait
-          if (originalImage.getHeight() > 300) {
-            desiredWidth = 300 * originalImage.getWidth() / originalImage.getHeight();
+          if (originalImage.getHeight() > 400) {
+            desiredWidth = 400 * originalImage.getWidth() / originalImage.getHeight();
           }
         }
       }
