@@ -1,6 +1,7 @@
 Upcoming version
 =======================
 + improved image caching (you should clear and rebuild your image cache)
+x fixed importing of watched status from NFO
 x tvdb: load poster instead of banner in the search window
 x fixed displaying of the clear trakt button
 x fixed sorting of artwork from tvdb (by rating)

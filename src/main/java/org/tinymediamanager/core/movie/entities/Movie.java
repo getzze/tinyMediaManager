@@ -228,6 +228,9 @@ public class Movie extends MediaEntity {
     this.certification = this.certification == Certification.NOT_RATED ? other.getCertification() : this.certification;
     this.edition = this.edition == MovieEdition.NONE ? other.getEdition() : this.edition;
 
+    this.watched = this.watched || other.watched;
+    this.lastWatched = this.lastWatched == null ? other.lastWatched : this.lastWatched;
+
     for (MediaGenres genre : other.getGenres()) {
       addGenre(genre); // already checks dupes
     }
