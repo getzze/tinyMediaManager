@@ -5,6 +5,7 @@ x tvdb: load poster instead of banner in the search window
 x fixed displaying of the clear trakt button
 x fixed sorting of artwork from tvdb (by rating)
 x fixed cleanup in the renamer #333
+x added logo for not rated
 
 Version 2.9.12
 =======================
