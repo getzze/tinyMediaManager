@@ -1,4 +1,4 @@
-Upcoming version
+Version 2.9.13
 =======================
 + improved image caching (you should clear and rebuild your image cache)
 + updated libmediainfo to 18.05
