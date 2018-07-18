@@ -255,13 +255,17 @@ public class ImageCache {
   /**
    * Cache image.
    * 
-   * @param mf
-   *          the media file
+   * @param originalFile
+   *          the original file
    * @return the file the cached file
    * @throws Exception
    */
   public static Path cacheImage(Path originalFile) throws Exception {
     MediaFile mf = new MediaFile(originalFile);
+    if (!mf.isGraphic()) {
+      throw new Exception("only image files can be cached");
+    }
+
     Path cachedFile = ImageCache.getCacheDir().resolve(getMD5(originalFile.toString()) + "." + Utils.getExtension(originalFile));
     if (!Files.exists(cachedFile)) {
       // check if the original file exists && size > 0
@@ -284,34 +288,25 @@ public class ImageCache {
 
       // calculate width based on MF type
       int desiredWidth = originalImage.getWidth(); // initialize with fallback
-      switch (mf.getType()) {
-        case FANART:
-          if (originalImage.getWidth() > 1000) {
-            desiredWidth = 1000;
-          }
-          break;
-
-        case POSTER:
-          if (originalImage.getHeight() > 500) {
-            desiredWidth = 350;
-          }
-          break;
-
-        case EXTRAFANART:
-        case THUMB:
-        case BANNER:
-        case GRAPHIC:
-          desiredWidth = 300;
-          break;
-
-        default:
-          break;
-      }
-
-      // special handling for movieset-fanart or movieset-poster
-      if (mf.getFilename().startsWith("movieset-fanart") || mf.getFilename().startsWith("movieset-poster")) {
+      if (mf.getType() == MediaFileType.FANART) {
+        // special handling for fanart, since that is displayed rather big
         if (originalImage.getWidth() > 1000) {
           desiredWidth = 1000;
+        }
+      }
+      else {
+        // decide the scale-side depending on the aspect ratio
+        if (((float) originalImage.getWidth()) / ((float) originalImage.getHeight()) > 1) {
+          // landscape
+          if (originalImage.getWidth() > 400) {
+            desiredWidth = 400;
+          }
+        }
+        else {
+          // portrait
+          if (originalImage.getHeight() > 400) {
+            desiredWidth = 400 * originalImage.getWidth() / originalImage.getHeight();
+          }
         }
       }
 

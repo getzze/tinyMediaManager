@@ -125,19 +125,12 @@ public class MovieSettingsPanel extends ScrollablePanel {
             FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC,
             FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("default:grow"),
             FormSpecs.RELATED_GAP_COLSPEC, },
-        new RowSpec[] {
-                FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-                FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-                FormSpecs.UNRELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-                FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-                FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-                FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-                FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-                FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-                FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-                FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
-                FormSpecs.RELATED_GAP_ROWSPEC,
-        }));
+        new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+            FormSpecs.UNRELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+            FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+            FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+            FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+            FormSpecs.RELATED_GAP_ROWSPEC, }));
 
     JLabel lblVisiblecolumns = new JLabel(BUNDLE.getString("Settings.movie.visiblecolumns")); //$NON-NLS-1$
     panelGeneral.add(lblVisiblecolumns, "2, 2, right, default");
@@ -224,7 +217,7 @@ public class MovieSettingsPanel extends ScrollablePanel {
         }
       }
     });
-    panelGeneral.add(btnClearTraktTvMovies, "6, 18, 3, 1, left, default");
+    panelGeneral.add(btnClearTraktTvMovies, "6, 20, 7, 1, left, default");
 
     JPanel panelMovieDataSources = new JPanel();
 
@@ -555,12 +548,12 @@ public class MovieSettingsPanel extends ScrollablePanel {
     //
     BeanProperty<MovieSettings, Boolean> settingsBeanProperty_8 = BeanProperty.create("runtimeFromMediaInfo");
     AutoBinding<MovieSettings, Boolean, JCheckBox, Boolean> autoBinding_6 = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, settings,
-            settingsBeanProperty_8, chckbxRuntimeFromMf, jCheckBoxBeanProperty);
+        settingsBeanProperty_8, chckbxRuntimeFromMf, jCheckBoxBeanProperty);
     autoBinding_6.bind();
     //
     BeanProperty<MovieSettings, Boolean> settingsBeanProperty_8a = BeanProperty.create("includeExternalAudioStreams");
     AutoBinding<MovieSettings, Boolean, JCheckBox, Boolean> autoBinding_6a = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, settings,
-            settingsBeanProperty_8a, chckbxIncludeExternalAudioStreams, jCheckBoxBeanProperty);
+        settingsBeanProperty_8a, chckbxIncludeExternalAudioStreams, jCheckBoxBeanProperty);
     autoBinding_6a.bind();
     //
     BeanProperty<MovieSettings, Boolean> settingsBeanProperty_9 = BeanProperty.create("yearColumnVisible");

@@ -188,6 +188,25 @@ public class UpgradeTasks {
 
       Globals.settings.saveSettings();
     }
+
+    // upgrade to v2.9.13
+    if (StrgUtils.compareVersion(v, "2.9.13") < 0) {
+      LOGGER.info("Performing upgrade tasks to version 2.9.13");
+      // Try to delete Zelluloid - if fails (because loaded) moving it to cache dir
+      Path z = Paths.get("plugins", "scraper-zelluloid.jar");
+      try {
+        Files.deleteIfExists(z);
+      }
+      catch (IOException e) {
+        try {
+          // moving a loded file work, delete might not always....
+          Utils.moveFileSafe(z, Paths.get("cache", "scraper-zelluloid.jar"));
+        }
+        catch (IOException e1) {
+          LOGGER.warn("Error moving scraper");
+        }
+      }
+    }
   }
 
   private static void moveToConfigFolder(Path file) {

@@ -34,6 +34,7 @@ import org.tinymediamanager.core.MediaFileType;
 import org.tinymediamanager.core.Message;
 import org.tinymediamanager.core.Message.MessageLevel;
 import org.tinymediamanager.core.MessageManager;
+import org.tinymediamanager.core.Settings;
 import org.tinymediamanager.core.Utils;
 import org.tinymediamanager.core.entities.MediaFile;
 import org.tinymediamanager.core.movie.MovieModuleManager;
@@ -192,6 +193,15 @@ public class MovieExtraImageFetcher implements Runnable {
       movie.setArtwork(destinationFile, type);
       movie.callbackForWrittenArtwork(MediaFileType.getMediaArtworkType(type));
       movie.saveToDb();
+
+      // build up image cache
+      if (Settings.getInstance().isImageCache()) {
+        try {
+          ImageCache.cacheImage(destinationFile);
+        }
+        catch (Exception ignored) {
+        }
+      }
     }
     catch (Exception e) {
       if (e instanceof InterruptedException) {
@@ -269,6 +279,15 @@ public class MovieExtraImageFetcher implements Runnable {
         MediaFile mf = new MediaFile(file, MediaFileType.EXTRAFANART);
         mf.gatherMediaInformation();
         movie.addToMediaFiles(mf);
+
+        // build up image cache
+        if (Settings.getInstance().isImageCache()) {
+          try {
+            ImageCache.cacheImage(file);
+          }
+          catch (Exception ignored) {
+          }
+        }
 
         i++;
       }
@@ -361,6 +380,15 @@ public class MovieExtraImageFetcher implements Runnable {
         MediaFile mf = new MediaFile(file, MediaFileType.EXTRATHUMB);
         mf.gatherMediaInformation();
         movie.addToMediaFiles(mf);
+
+        // build up image cache
+        if (Settings.getInstance().isImageCache()) {
+          try {
+            ImageCache.cacheImage(file);
+          }
+          catch (Exception ignored) {
+          }
+        }
 
         i++;
       }

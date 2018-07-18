@@ -347,7 +347,8 @@ public class MediaFile extends AbstractModelObject implements Comparable<MediaFi
         return MediaFileType.VIDEO_EXTRA;
       }
 
-      if (basename.matches("(?i).*[_.-]*trailer?$") || foldername.equalsIgnoreCase("trailer") || foldername.equalsIgnoreCase("trailers")) {
+      if (basename.matches("(?i).*[_.-]*trailer?$") || basename.equalsIgnoreCase("movie-trailer") || foldername.equalsIgnoreCase("trailer")
+          || foldername.equalsIgnoreCase("trailers")) {
         return MediaFileType.TRAILER;
       }
 

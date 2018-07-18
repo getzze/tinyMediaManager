@@ -1,3 +1,21 @@
+Upcoming version
+=======================
++ improved image caching (you should clear and rebuild your image cache)
++ updated libmediainfo to 18.05
++ added another recognized trailer filename (movie-trailer.*)
++ added {} as valid delimiter in the movie name detection
+x fixed importing of watched status from NFO
+x tvdb: load poster instead of banner in the search window
+x tvdb: fixed sorting of artwork from tvdb (by rating)
+x imdb: fixed episode date parsing
+x fixed displaying of the clear trakt button
+x fixed cleanup in the renamer #333
+x added logo for not rated
+x improved season and episode detection
+x corrected app version display on macOS
+x fixed some smaller issues on actor image handling
+x removed the zelluloid.de scraper (this service has been shut down)
+
 Version 2.9.12
 =======================
 x display Kodi scrapers at the end of the list
