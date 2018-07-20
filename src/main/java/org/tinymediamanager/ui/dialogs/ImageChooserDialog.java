@@ -659,7 +659,7 @@ public class ImageChooserDialog extends TmmDialog {
           tfImageUrl.setText("");
         }
         catch (Exception e) {
-          LOGGER.error("could not download manually entered image url: " + tfImageUrl.getText());
+          LOGGER.error("could not download manually entered image URL: " + tfImageUrl.getText());
         }
       }
     };

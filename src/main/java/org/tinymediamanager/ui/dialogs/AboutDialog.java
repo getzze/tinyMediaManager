@@ -66,7 +66,7 @@ public class AboutDialog extends TmmDialog {
   private static final String         TRANSLATORS      = "Joostzilla, Zagoslav, zbynek.fiala, roliverosc, roandr, Andrey Gorodnov, julienbloch, nerve, carlosmarchi, "
       + "espiman, beonex, otefenli, sxczmnb, piodio, peppe_sr, szobidani, kriss1981, mrj, xsintive, Gam, ppanhh, SeNmaN, Translador, Deleuze23, "
       + "ShevAbam, abrupt_neurosis, lynxstrike, Spegni, carfesh, vekheoqf, keleniki, htrex, namuit, stickell, Voltinus, Zwanzig, vipkoza"
-      + "Amarante.pt_BR, TaniaC, maopequena, leandrofuscaldi, dukobpa3, bleuge";
+      + "Amarante.pt_BR, TaniaC, maopequena, leandrofuscaldi, dukobpa3, bleuge, Allan Nordhøy";
 
   private final JPanel                contentPanel     = new JPanel();
   private final Action                action           = new SwingAction();

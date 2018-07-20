@@ -109,14 +109,14 @@ public class TvShowDetailsPanel extends JPanel {
     lblStatus = new JLabel("");
     add(lblStatus, "3, 4");
 
-    JLabel lblImdbIdT = new JLabel("IMDB Id");
+    JLabel lblImdbIdT = new JLabel("IMDB ID");
     setBoldLabel(lblImdbIdT);
     add(lblImdbIdT, "5, 4");
 
     lblImdbId = new LinkLabel("");
     lblImdbId.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
-        String url = "http://www.imdb.com/title/" + lblImdbId.getNormalText();
+        String url = "https://www.imdb.com/title/" + lblImdbId.getNormalText();
         try {
           TmmUIHelper.browseUrl(url);
         }
@@ -137,19 +137,19 @@ public class TvShowDetailsPanel extends JPanel {
     lblStudio = new JLabel("");
     add(lblStudio, "3, 6");
 
-    JLabel lblThetvdbIdT = new JLabel("TheTVDB Id");
+    JLabel lblThetvdbIdT = new JLabel("TheTVDB ID");
     setBoldLabel(lblThetvdbIdT);
     add(lblThetvdbIdT, "5, 6");
 
     lblThetvdbId = new LinkLabel("");
     lblThetvdbId.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
-        String url = "http://thetvdb.com/?tab=series&id=" + lblThetvdbId.getNormalText();
+        String url = "https://thetvdb.com/?tab=series&id=" + lblThetvdbId.getNormalText();
         try {
           TmmUIHelper.browseUrl(url);
         }
         catch (Exception e) {
-          LOGGER.error("browse to thetvdb", e);
+          LOGGER.error("browse to TheTVDB", e);
           MessageManager.instance
               .pushMessage(new Message(MessageLevel.ERROR, url, "message.erroropenurl", new String[] { ":", e.getLocalizedMessage() }));
         }
