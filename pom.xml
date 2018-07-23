@@ -48,7 +48,7 @@
         <dependency>
             <groupId>org.tinymediamanager</groupId>
             <artifactId>resources</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.6</version>
         </dependency>
         <dependency>
             <!-- own patched artifacts -->
@@ -82,7 +82,7 @@
         <dependency>
             <groupId>org.tinymediamanager.plugins</groupId>
             <artifactId>scraper-imdb</artifactId>
-            <version>1.15-SNAPSHOT</version>
+            <version>1.15</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -141,7 +141,7 @@
         <dependency>
             <groupId>org.tinymediamanager.plugins</groupId>
             <artifactId>scraper-tvdb</artifactId>
-            <version>1.11-SNAPSHOT</version>
+            <version>1.11</version>
             <scope>provided</scope>
         </dependency>
         <!--dependency>

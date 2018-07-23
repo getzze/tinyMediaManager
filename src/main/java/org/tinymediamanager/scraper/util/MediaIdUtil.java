@@ -54,7 +54,7 @@ public class MediaIdUtil {
       imdbId = (String) md.getId(MediaMetadata.IMDB);
     }
     catch (Exception e) {
-      LOGGER.error("could not get imdb id from tvdb id: " + e.getMessage());
+      LOGGER.error("could not get IMDb ID from TheTVDB ID: " + e.getMessage());
     }
 
     if (StringUtils.isBlank(imdbId)) {
