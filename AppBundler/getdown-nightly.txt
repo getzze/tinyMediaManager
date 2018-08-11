@@ -1,5 +1,5 @@
 # The URL from which the client is downloaded
-appbase = http://nightly.tinymediamanager.org/build/
+appbase = http://nightly.tinymediamanager.org/v2/build/
 mirror = https://tinymediamanager.ci.cloudbees.com/job/tinyMediaManager-nightly/ws/build/
 
 # UI Configuration
