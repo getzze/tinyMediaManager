@@ -214,7 +214,7 @@ public class TinyMediaManagerCMD {
         "    -scrapeAll            ALL movies/TvShows/episodes, whether they have already been scraped or not\n" +
         "\n" +
         "    -rename               rename & cleanup all the movies/TvShows/episodes from former scrape command\n" +
-        "    -config file.xml      specify an alternative configuration xml file\n" +
+        "    -config file.xml      specify an alternative configuration xml file in the data folder\n" +
         "    -export template dir  exports your complete movie/tv library with specified template to dir\n" +
         "    -checkFiles           does a physical check, if all files in DB are existent on filesystem (might take long!)\n" +
         "\n" +
