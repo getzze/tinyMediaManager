@@ -1,5 +1,7 @@
 Version 2.9.14
 =======================
++ option to ignore certificate problems #373
+x retrying to get artwork for 5 times #369
 x fixed detection of language names
 x fixed scraping of ofdb
 x fixed language name for sl/sk
