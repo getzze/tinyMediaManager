@@ -144,7 +144,7 @@ public class MovieExtraImageFetcher implements Runnable {
       Url url1 = new Url(artworkUrl);
       tempFile = movie.getPathNIO().resolve(filename + ".part");
       outputStream = new FileOutputStream(tempFile.toFile());
-      is = url1.getInputStream();
+      is = url1.getInputStreamWithRetry(5);
 
       if (is == null) {
         // 404 et all
@@ -257,7 +257,7 @@ public class MovieExtraImageFetcher implements Runnable {
         LOGGER.debug("writing extrafanart " + file.getFileName());
 
         outputStream = new FileOutputStream(file.toFile());
-        is = url.getInputStream();
+        is = url.getInputStreamWithRetry(5);
         if (is == null) {
           // 404 et all
           throw new FileNotFoundException("Error accessing url: " + url.getStatusLine());
@@ -290,14 +290,6 @@ public class MovieExtraImageFetcher implements Runnable {
         }
 
         i++;
-      }
-      catch (InterruptedException e) {
-        LOGGER.warn("interrupted download extrafanarts");
-        IOUtils.closeQuietly(is);
-        IOUtils.closeQuietly(outputStream);
-
-        // leave the loop
-        break;
       }
       catch (Exception e) {
         LOGGER.warn("problem downloading extrafanarts: " + e.getMessage());
@@ -358,7 +350,7 @@ public class MovieExtraImageFetcher implements Runnable {
 
           outputStream = new FileOutputStream(file.toFile());
           Url url1 = new Url(url);
-          is = url1.getInputStream();
+          is = url1.getInputStreamWithRetry(5);
 
           if (is == null) {
             // 404 et all
@@ -391,14 +383,6 @@ public class MovieExtraImageFetcher implements Runnable {
         }
 
         i++;
-      }
-      catch (InterruptedException e) {
-        LOGGER.warn("interrupted download extrathumbs");
-        IOUtils.closeQuietly(is);
-        IOUtils.closeQuietly(outputStream);
-
-        // leave the loop
-        break;
       }
       catch (Exception e) {
         LOGGER.warn("problem downloading extrathumbs: " + e.getMessage());

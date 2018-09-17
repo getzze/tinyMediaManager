@@ -109,7 +109,7 @@ public class MediaEntityImageFetcherTask implements Runnable {
         if (!sameFile) {
           Url url1 = new Url(url);
           FileOutputStream outputStream = new FileOutputStream(tempFile.toFile());
-          InputStream is = url1.getInputStream();
+          InputStream is = url1.getInputStreamWithRetry(5);
           if (is == null) {
             // 404 et all
             IOUtils.closeQuietly(outputStream);

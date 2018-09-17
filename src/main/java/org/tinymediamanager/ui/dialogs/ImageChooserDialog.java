@@ -644,7 +644,7 @@ public class ImageChooserDialog extends TmmDialog {
           art.setPreviewUrl(tfImageUrl.getText());
 
           Url url = new Url(art.getPreviewUrl());
-          final BufferedImage bufferedImage = ImageCache.createImage(url.getBytes());
+          final BufferedImage bufferedImage = ImageCache.createImage(url.getBytesWithRetry(5));
 
           SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -931,7 +931,7 @@ public class ImageChooserDialog extends TmmDialog {
             Url url = null;
             try {
               url = new Url(art.getPreviewUrl());
-              BufferedImage bufferedImage = ImageCache.createImage(url.getBytes());
+              BufferedImage bufferedImage = ImageCache.createImage(url.getBytesWithRetry(5));
 
               DownloadChunk chunk = new DownloadChunk();
               chunk.artwork = art;

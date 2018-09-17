@@ -18,6 +18,7 @@ package org.tinymediamanager.core.movie.tasks;
 import static java.nio.file.FileVisitResult.CONTINUE;
 import static java.nio.file.FileVisitResult.SKIP_SUBTREE;
 import static java.nio.file.FileVisitResult.TERMINATE;
+import static org.tinymediamanager.core.MediaFileType.VIDEO;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -382,7 +383,7 @@ public class MovieUpdateDatasourceTask2 extends TmmThreadPool {
         mf.setType(mf.parseType());
 
         // System.out.println("************ " + mf);
-        if (mf.getType() == MediaFileType.VIDEO) {
+        if (mf.getType() == VIDEO) {
           videoFileFound = true;
           if (mf.isDiscFile()) {
             isDiscFolder = true;
@@ -566,7 +567,14 @@ public class MovieUpdateDatasourceTask2 extends TmmThreadPool {
     // convert to MFs (we need it anyways at the end)
     ArrayList<MediaFile> mfs = new ArrayList<>();
     for (Path file : allFiles) {
-      mfs.add(new MediaFile(file));
+      MediaFile mf = new MediaFile(file);
+
+      // if the actual file is in a subdir of the movie dir with the name extra(s)
+      if (mf.getType() == VIDEO && !file.getParent().equals(movieDir) && movieDir.relativize(file).getName(0).toString().matches("(?i)extra[s]+")) {
+        mf.setType(MediaFileType.VIDEO_EXTRA);
+      }
+
+      mfs.add(mf);
     }
     allFiles.clear();
 
@@ -609,7 +617,7 @@ public class MovieUpdateDatasourceTask2 extends TmmThreadPool {
           LOGGER.warn("| couldn't read TXT " + mf.getFilename());
         }
       }
-      else if (mf.getType().equals(MediaFileType.VIDEO)) {
+      else if (mf.getType().equals(VIDEO)) {
         videoName = mf.getBasename();
       }
     }
@@ -665,7 +673,7 @@ public class MovieUpdateDatasourceTask2 extends TmmThreadPool {
       for (MediaFile mf : mfs) {
         if (mf.getType().equals(MediaFileType.GRAPHIC)) {
           LOGGER.debug("| parsing unknown graphic " + mf.getFilename());
-          List<MediaFile> vid = movie.getMediaFiles(MediaFileType.VIDEO);
+          List<MediaFile> vid = movie.getMediaFiles(VIDEO);
           if (vid != null && !vid.isEmpty()) {
             String vfilename = vid.get(0).getFilename();
             if (FilenameUtils.getBaseName(vfilename).equals(FilenameUtils.getBaseName(mf.getFilename())) // basename
@@ -687,7 +695,7 @@ public class MovieUpdateDatasourceTask2 extends TmmThreadPool {
     // check if that movie is an offline movie
     // ***************************************************************
     boolean isOffline = false;
-    for (MediaFile mf : movie.getMediaFiles(MediaFileType.VIDEO)) {
+    for (MediaFile mf : movie.getMediaFiles(VIDEO)) {
       if ("disc".equalsIgnoreCase(mf.getExtension())) {
         isOffline = true;
       }
@@ -744,7 +752,7 @@ public class MovieUpdateDatasourceTask2 extends TmmThreadPool {
       }
     });
 
-    for (MediaFile mf : getMediaFiles(mfs, MediaFileType.VIDEO)) {
+    for (MediaFile mf : getMediaFiles(mfs, VIDEO)) {
 
       Movie movie = null;
       String basename = FilenameUtils.getBaseName(Utils.cleanStackingMarkers(mf.getFilename()));
@@ -767,13 +775,13 @@ public class MovieUpdateDatasourceTask2 extends TmmThreadPool {
 
       // 1) check if MF is already assigned to a movie within path
       for (Movie m : movies) {
-        if (m.getMediaFiles(MediaFileType.VIDEO).contains(mf)) {
+        if (m.getMediaFiles(VIDEO).contains(mf)) {
           // ok, our MF is already in an movie
           LOGGER.debug("| found movie '" + m.getTitle() + "' from MediaFile " + mf);
           movie = m;
           break;
         }
-        for (MediaFile mfile : m.getMediaFiles(MediaFileType.VIDEO)) {
+        for (MediaFile mfile : m.getMediaFiles(VIDEO)) {
           // try to match like if we would create a new movie
           String[] mfileTY = ParserUtils.detectCleanMovienameAndYear(FilenameUtils.getBaseName(Utils.cleanStackingMarkers(mfile.getFilename())));
           String[] mfTY = ParserUtils.detectCleanMovienameAndYear(FilenameUtils.getBaseName(Utils.cleanStackingMarkers(mf.getFilename())));
@@ -855,7 +863,7 @@ public class MovieUpdateDatasourceTask2 extends TmmThreadPool {
 
       // check if that movie is an offline movie
       boolean isOffline = false;
-      for (MediaFile mediaFiles : movie.getMediaFiles(MediaFileType.VIDEO)) {
+      for (MediaFile mediaFiles : movie.getMediaFiles(VIDEO)) {
         if ("disc".equalsIgnoreCase(mediaFiles.getExtension())) {
           isOffline = true;
         }
@@ -1035,7 +1043,7 @@ public class MovieUpdateDatasourceTask2 extends TmmThreadPool {
             }
           }
         }
-        if (movie.getMediaFiles(MediaFileType.VIDEO).isEmpty()) {
+        if (movie.getMediaFiles(VIDEO).isEmpty()) {
           LOGGER.debug("Movie (" + movie.getTitle() + ") without VIDEO files detected, removing from DB...");
           moviesToRemove.add(movie);
         }
@@ -1096,7 +1104,7 @@ public class MovieUpdateDatasourceTask2 extends TmmThreadPool {
             }
           }
         }
-        if (movie.getMediaFiles(MediaFileType.VIDEO).isEmpty()) {
+        if (movie.getMediaFiles(VIDEO).isEmpty()) {
           LOGGER.debug("Movie (" + movie.getTitle() + ") without VIDEO files detected, removing from DB...");
           moviesToRemove.add(movie);
         }
@@ -1379,7 +1387,7 @@ public class MovieUpdateDatasourceTask2 extends TmmThreadPool {
 
           // check if file is a VIDEO type - only scan those folders (and not extras/trailer folders)!
           MediaFile mf = new MediaFile(file);
-          if (mf.getType() == MediaFileType.VIDEO) {
+          if (mf.getType() == VIDEO && !datasource.relativize(file.getParent()).toString().matches("(?i).*extra[s]?.*")) {
             videofolders.add(file.getParent());
           }
         }
