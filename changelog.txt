@@ -5,6 +5,7 @@ x retrying to get artwork for 5 times #369
 x fixed detection of language names
 x fixed scraping of ofdb
 x fixed language name for sl/sk
+x CMD export: sorted movies/TV shows the same way as in UI mode
 
 Version 2.9.13
 =======================

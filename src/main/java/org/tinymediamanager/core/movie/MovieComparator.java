@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.tinymediamanager.ui.movies;
+package org.tinymediamanager.core.movie;
 
 import java.text.Collator;
 import java.text.Normalizer;

@@ -44,6 +44,7 @@ import javax.swing.event.TableModelListener;
 
 import org.tinymediamanager.core.AbstractModelObject;
 import org.tinymediamanager.core.entities.MediaFile;
+import org.tinymediamanager.core.movie.MovieComparator;
 import org.tinymediamanager.core.movie.MovieRenamerPreview;
 import org.tinymediamanager.core.movie.MovieRenamerPreviewContainer;
 import org.tinymediamanager.core.movie.entities.Movie;
@@ -56,7 +57,6 @@ import org.tinymediamanager.ui.TmmFontHelper;
 import org.tinymediamanager.ui.UTF8Control;
 import org.tinymediamanager.ui.components.ZebraJTable;
 import org.tinymediamanager.ui.dialogs.TmmDialog;
-import org.tinymediamanager.ui.movies.MovieComparator;
 
 import com.jgoodies.forms.factories.FormFactory;
 import com.jgoodies.forms.layout.ColumnSpec;
