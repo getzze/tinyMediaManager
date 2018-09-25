@@ -567,14 +567,7 @@ public class MovieUpdateDatasourceTask2 extends TmmThreadPool {
     // convert to MFs (we need it anyways at the end)
     ArrayList<MediaFile> mfs = new ArrayList<>();
     for (Path file : allFiles) {
-      MediaFile mf = new MediaFile(file);
-
-      // if the actual file is in a subdir of the movie dir with the name extra(s)
-      if (mf.getType() == VIDEO && !file.getParent().equals(movieDir) && movieDir.relativize(file).getName(0).toString().matches("(?i)extra[s]+")) {
-        mf.setType(MediaFileType.VIDEO_EXTRA);
-      }
-
-      mfs.add(mf);
+      mfs.add(new MediaFile(file));
     }
     allFiles.clear();
 
@@ -1387,8 +1380,11 @@ public class MovieUpdateDatasourceTask2 extends TmmThreadPool {
 
           // check if file is a VIDEO type - only scan those folders (and not extras/trailer folders)!
           MediaFile mf = new MediaFile(file);
-          if (mf.getType() == VIDEO && !datasource.relativize(file.getParent()).toString().matches("(?i).*extra[s]?.*")) {
+          if (mf.getType() == VIDEO && !datasource.relativize(file.getParent()).toString().matches("(?i).*[_.-]+extra[s]?.*")) {
             videofolders.add(file.getParent());
+          }
+          else {
+            LOGGER.debug("no VIDEO or EXTRA - do not parse {}", file);
           }
         }
       }
