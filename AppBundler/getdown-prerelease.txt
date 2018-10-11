@@ -28,7 +28,8 @@ classpath = locale/*
 # delete = abc.jar
 
 # cleanup - check folder for unreferenced files and delete
-deleteAbandonedFilesInDir = lib
+# unsafe hack!
+# deleteAbandonedFilesInDir = lib
 
 resource = [windows] tinyMediaManager.new           #rename to new, for self-update
 resource = [windows] tinyMediaManagerUpd.new        #rename to new, for self-update
