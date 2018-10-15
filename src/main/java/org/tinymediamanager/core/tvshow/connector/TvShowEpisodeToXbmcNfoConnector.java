@@ -336,7 +336,7 @@ public class TvShowEpisodeToXbmcNfoConnector {
         Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dat = formatter.format(new Date());
         String comment = "<!-- created on " + dat + " - tinyMediaManager " + Globals.settings.getVersion() + " -->\n";
-        m.setProperty("com.sun.xml.internal.bind.xmlHeaders", comment);
+        m.setProperty("com.sun.xml.bind.xmlHeaders", comment);
 
         Writer w = new StringWriter();
         m.marshal(xbmc, w);
