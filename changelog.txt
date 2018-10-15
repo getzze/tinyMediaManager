@@ -6,6 +6,8 @@ x fixed detection of language names
 x fixed scraping of ofdb
 x fixed language name for sl/sk
 x CMD export: sorted movies/TV shows the same way as in UI mode
+x fixed detection of nested extras folders
+x fixed detection of extras/extrafanart/extrathumbs in TV show update datasources #395
 
 Version 2.9.13
 =======================
