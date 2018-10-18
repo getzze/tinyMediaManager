@@ -161,6 +161,7 @@ public class MediaFile extends AbstractModelObject implements Comparable<MediaFi
   private Path                                       file                 = null;
   private boolean                                    isISO                = false;
   private boolean                                    isAnimatedGraphic    = false;
+  private boolean                                    HDR                  = false;
 
   /**
    * "clones" a new media file.
@@ -1439,6 +1440,14 @@ public class MediaFile extends AbstractModelObject implements Comparable<MediaFi
     this.isAnimatedGraphic = isAnimatedGraphic;
   }
 
+  public boolean isHDR() {
+    return HDR;
+  }
+
+  public void setHDR(boolean hDR) {
+    HDR = hDR;
+  }
+
   /**
    * checks GRAPHIC file for animation, and sets animated flag<br>
    * currently supported only .GIF<br>
@@ -1727,6 +1736,15 @@ public class MediaFile extends AbstractModelObject implements Comparable<MediaFi
         try {
           String fr = getMediaInfo(StreamKind.Video, 0, "FrameRate");
           setFrameRate(Double.parseDouble(fr));
+        }
+        catch (Exception ignored) {
+        }
+
+        try {
+          String hdr = getMediaInfo(StreamKind.Video, 0, "colour_primaries");
+          if (hdr.contains("2020")) {
+            setHDR(true);
+          }
         }
         catch (Exception ignored) {
         }
