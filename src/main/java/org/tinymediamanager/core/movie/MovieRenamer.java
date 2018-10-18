@@ -1152,6 +1152,12 @@ public class MovieRenamer {
         if (!movie.getTags().isEmpty()) {
           ret = movie.getTags().get(0);
         }
+        break;
+      case "$H":
+        if (mf.isHDR()) {
+          ret = "HDR";
+        }
+        break;
       default:
         break;
     }

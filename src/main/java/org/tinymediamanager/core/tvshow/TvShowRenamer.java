@@ -709,6 +709,11 @@ public class TvShowRenamer {
       case "$F":
         ret = mf.getVideoFormat();
         break;
+      case "$H":
+        if (mf.isHDR()) {
+          ret = "HDR";
+        }
+        break;
       default:
         break;
     }

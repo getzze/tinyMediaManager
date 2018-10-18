@@ -160,7 +160,9 @@ public class MediaFile extends AbstractModelObject implements Comparable<MediaFi
   private Map<StreamKind, List<Map<String, String>>> miSnapshot           = null;
   private Path                                       file                 = null;
   private boolean                                    isISO                = false;
+  @JsonProperty
   private boolean                                    isAnimatedGraphic    = false;
+  @JsonProperty
   private boolean                                    HDR                  = false;
 
   /**
@@ -1444,8 +1446,8 @@ public class MediaFile extends AbstractModelObject implements Comparable<MediaFi
     return HDR;
   }
 
-  public void setHDR(boolean hDR) {
-    HDR = hDR;
+  public void setHDR(boolean hdrange) {
+    HDR = hdrange;
   }
 
   /**
@@ -1742,7 +1744,7 @@ public class MediaFile extends AbstractModelObject implements Comparable<MediaFi
 
         try {
           String hdr = getMediaInfo(StreamKind.Video, 0, "colour_primaries");
-          if (hdr.contains("2020")) {
+          if (getBitDepth() >= 10 && hdr.contains("2020")) {
             setHDR(true);
           }
         }
