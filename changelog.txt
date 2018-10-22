@@ -1,6 +1,8 @@
 Version 2.9.14
 =======================
-+ option to ignore certificate problems #373
++ Java 9 / 10 / 11 compatibility!
++ High Dynamic Range detection for mediafiles - you need to reload MediaInfo and then use $H in renamer
++ option to ignore SSL certificate problems #373
 x retrying to get artwork for 5 times #369
 x fixed detection of language names
 x fixed scraping of ofdb
