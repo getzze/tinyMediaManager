@@ -11,6 +11,7 @@ x CMD export: sorted movies/TV shows the same way as in UI mode
 x fixed detection of nested extras folders
 x fixed detection of extras/extrafanart/extrathumbs in TV show update datasources #395
 x only set 3D flag/edition on first import #231
+x fixed statusbar layout with long texts
 
 Version 2.9.13
 =======================
