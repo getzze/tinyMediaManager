@@ -302,6 +302,7 @@ public class TvShowRenamerSettingsPanel extends JPanel implements HierarchyListe
     exampleEventList.add(new TvShowRenamerExample("$V"));
     exampleEventList.add(new TvShowRenamerExample("$F"));
     exampleEventList.add(new TvShowRenamerExample("$S"));
+    exampleEventList.add(new TvShowRenamerExample("$H"));
 
   }
 

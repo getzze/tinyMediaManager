@@ -95,8 +95,8 @@ public class StatusBar extends JPanel implements TmmTaskListener {
   private void initComponents() {
     taskMap = new HashMap<>();
     setLayout(new FormLayout(
-        new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("default:grow"),
-            FormSpecs.DEFAULT_COLSPEC, FormSpecs.LABEL_COMPONENT_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
+        new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("20dlu"),
+            ColumnSpec.decode("50dlu:grow"), FormSpecs.LABEL_COMPONENT_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
             FormSpecs.DEFAULT_COLSPEC, ColumnSpec.decode("15dlu"), FormSpecs.DEFAULT_COLSPEC, FormSpecs.LABEL_COMPONENT_GAP_COLSPEC, },
         new RowSpec[] { FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC, }));
 
@@ -136,7 +136,7 @@ public class StatusBar extends JPanel implements TmmTaskListener {
     add(memory, "2, 2");
 
     add(verticalStrut, "4, 2");
-    add(label, "5, 2");
+    add(label, "5, 2, right, default");
     add(bar, "7, 2");
     add(closeButton, "9, 2");
 

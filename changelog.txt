@@ -1,3 +1,18 @@
+Version 2.9.14
+=======================
++ Java 9 / 10 / 11 compatibility!
++ High Dynamic Range detection for mediafiles - you need to reload MediaInfo and then use $H in renamer
++ option to ignore SSL certificate problems #373
+x retrying to get artwork for 5 times #369
+x fixed detection of language names
+x fixed scraping of ofdb
+x fixed language name for sl/sk
+x CMD export: sorted movies/TV shows the same way as in UI mode
+x fixed detection of nested extras folders
+x fixed detection of extras/extrafanart/extrathumbs in TV show update datasources #395
+x only set 3D flag/edition on first import #231
+x fixed statusbar layout with long texts
+
 Version 2.9.13
 =======================
 + improved image caching (you should clear and rebuild your image cache)

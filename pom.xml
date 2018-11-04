@@ -43,7 +43,7 @@
             <groupId>org.tinymediamanager</groupId>
             <artifactId>api-scraper</artifactId>
             <!-- stick to 2.x for v2! -->
-            <version>2.11</version>
+            <version>2.12-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.tinymediamanager</groupId>
@@ -224,6 +224,18 @@
             <groupId>com.madgag</groupId>
             <artifactId>animated-gif-lib</artifactId>
             <version>1.2</version>
+        </dependency>
+        
+        <!-- J9 / J10 / J11 deps -->
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.2.7</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
         </dependency>
     </dependencies>
 

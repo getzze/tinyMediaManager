@@ -114,6 +114,7 @@ public class GeneralSettingsPanel extends ScrollablePanel {
   private JLabel                      lblLanguageHint;
   private JLabel                      lblFontChangeHint;
   private JLabel                      lblMemory;
+  private JCheckBox                   chckbxIgnoreSSLProblems;
 
   /**
    * Instantiates a new general settings panel.
@@ -364,12 +365,16 @@ public class GeneralSettingsPanel extends ScrollablePanel {
     panelMisc.setBorder(new TitledBorder(null, BUNDLE.getString("Settings.misc"), TitledBorder.LEADING, TitledBorder.TOP, null, null)); //$NON-NLS-1$
     add(panelMisc, "2, 8, fill, fill");
     panelMisc.setLayout(new FormLayout(
-        new ColumnSpec[] { FormFactory.RELATED_GAP_COLSPEC, FormFactory.DEFAULT_COLSPEC, FormFactory.RELATED_GAP_COLSPEC,
-            ColumnSpec.decode("default:grow"), FormFactory.RELATED_GAP_COLSPEC, },
-        new RowSpec[] { FormFactory.RELATED_GAP_ROWSPEC, FormFactory.DEFAULT_ROWSPEC, FormFactory.RELATED_GAP_ROWSPEC, }));
+        new ColumnSpec[] { FormSpecs.RELATED_GAP_COLSPEC, FormSpecs.DEFAULT_COLSPEC, FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("default:grow"),
+            FormSpecs.RELATED_GAP_COLSPEC, },
+        new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC,
+            FormSpecs.RELATED_GAP_ROWSPEC, }));
 
     chckbxDeleteTrash = new JCheckBox(BUNDLE.getString("Settings.deletetrash"));
     panelMisc.add(chckbxDeleteTrash, "2, 2, 3, 1");
+
+    chckbxIgnoreSSLProblems = new JCheckBox(BUNDLE.getString("Settings.ignoressl"));
+    panelMisc.add(chckbxIgnoreSSLProblems, "2, 4, 3, 1");
 
     initDataBindings();
 
@@ -594,5 +599,10 @@ public class GeneralSettingsPanel extends ScrollablePanel {
     AutoBinding<JSlider, Integer, JLabel, String> autoBinding_11 = Bindings.createAutoBinding(UpdateStrategy.READ, sliderMemory, jSliderBeanProperty,
         lblMemory, jLabelBeanProperty);
     autoBinding_11.bind();
+    //
+    BeanProperty<Settings, Boolean> settingsBeanProperty_4 = BeanProperty.create("ignoreSSLProblems");
+    AutoBinding<Settings, Boolean, JCheckBox, Boolean> autoBinding_4 = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, settings,
+        settingsBeanProperty_4, chckbxIgnoreSSLProblems, jCheckBoxBeanProperty);
+    autoBinding_4.bind();
   }
 }

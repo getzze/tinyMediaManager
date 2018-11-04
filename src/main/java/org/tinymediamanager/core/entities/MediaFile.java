@@ -160,7 +160,10 @@ public class MediaFile extends AbstractModelObject implements Comparable<MediaFi
   private Map<StreamKind, List<Map<String, String>>> miSnapshot           = null;
   private Path                                       file                 = null;
   private boolean                                    isISO                = false;
+  @JsonProperty
   private boolean                                    isAnimatedGraphic    = false;
+  @JsonProperty
+  private boolean                                    HDR                  = false;
 
   /**
    * "clones" a new media file.
@@ -306,7 +309,14 @@ public class MediaFile extends AbstractModelObject implements Comparable<MediaFi
     String ext = getExtension().toLowerCase(Locale.ROOT);
     String basename = FilenameUtils.getBaseName(getFilename());
     String foldername = FilenameUtils.getBaseName(getPath()).toLowerCase(Locale.ROOT);
-
+    String parentparent = "";
+    try {
+      parentparent = FilenameUtils.getBaseName(getFileAsPath().getParent().getParent().toString()).toLowerCase(Locale.ROOT);
+    }
+    catch (Exception e) {
+      // could happen if we are no 2 levels deep;
+      LOGGER.debug("way to up");
+    }
     if (ext.equals("nfo")) {
       return MediaFileType.NFO;
     }
@@ -341,6 +351,7 @@ public class MediaFile extends AbstractModelObject implements Comparable<MediaFi
           || basename.matches("(?i).*[-]+extra[s]?[-].*") // extra[s] just with surrounding dash (other delims problem)
           || foldername.equalsIgnoreCase("extras") // preferred folder name
           || foldername.equalsIgnoreCase("extra") // preferred folder name
+          || (!parentparent.isEmpty() && parentparent.matches("extra[s]?")) // extras folder a level deeper
           || basename.matches("(?i).*[-](behindthescenes|deleted|featurette|interview|scene|short)$") // Plex (w/o trailer)
           || PLEX_EXTRA_FOLDERS.contains(foldername)) // Plex Extra folders
       {
@@ -1431,6 +1442,14 @@ public class MediaFile extends AbstractModelObject implements Comparable<MediaFi
     this.isAnimatedGraphic = isAnimatedGraphic;
   }
 
+  public boolean isHDR() {
+    return HDR;
+  }
+
+  public void setHDR(boolean hdrange) {
+    HDR = hdrange;
+  }
+
   /**
    * checks GRAPHIC file for animation, and sets animated flag<br>
    * currently supported only .GIF<br>
@@ -1719,6 +1738,15 @@ public class MediaFile extends AbstractModelObject implements Comparable<MediaFi
         try {
           String fr = getMediaInfo(StreamKind.Video, 0, "FrameRate");
           setFrameRate(Double.parseDouble(fr));
+        }
+        catch (Exception ignored) {
+        }
+
+        try {
+          String hdr = getMediaInfo(StreamKind.Video, 0, "colour_primaries");
+          if (getBitDepth() >= 10 && hdr.contains("2020")) {
+            setHDR(true);
+          }
         }
         catch (Exception ignored) {
         }

@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -33,6 +34,7 @@ import org.tinymediamanager.core.MediaEntityExporter.TemplateType;
 import org.tinymediamanager.core.Settings;
 import org.tinymediamanager.core.UpdaterTask;
 import org.tinymediamanager.core.entities.MediaFile;
+import org.tinymediamanager.core.movie.MovieComparator;
 import org.tinymediamanager.core.movie.MovieExporter;
 import org.tinymediamanager.core.movie.MovieList;
 import org.tinymediamanager.core.movie.MovieModuleManager;
@@ -43,6 +45,7 @@ import org.tinymediamanager.core.movie.tasks.MovieScrapeTask;
 import org.tinymediamanager.core.movie.tasks.MovieUpdateDatasourceTask2;
 import org.tinymediamanager.core.threading.TmmTask;
 import org.tinymediamanager.core.threading.TmmTaskManager;
+import org.tinymediamanager.core.tvshow.TvShowComparator;
 import org.tinymediamanager.core.tvshow.TvShowExporter;
 import org.tinymediamanager.core.tvshow.TvShowList;
 import org.tinymediamanager.core.tvshow.TvShowModuleManager;
@@ -214,7 +217,7 @@ public class TinyMediaManagerCMD {
         "    -scrapeAll            ALL movies/TvShows/episodes, whether they have already been scraped or not\n" +
         "\n" +
         "    -rename               rename & cleanup all the movies/TvShows/episodes from former scrape command\n" +
-        "    -config file.xml      specify an alternative configuration xml file\n" +
+        "    -config file.xml      specify an alternative configuration xml file in the data folder\n" +
         "    -export template dir  exports your complete movie/tv library with specified template to dir\n" +
         "    -checkFiles           does a physical check, if all files in DB are existent on filesystem (might take long!)\n" +
         "\n" +
@@ -362,7 +365,9 @@ public class TinyMediaManagerCMD {
             }
             else {
               MovieExporter ex = new MovieExporter(Paths.get(t.getPath()));
-              ex.export(MovieList.getInstance().getMovies(), exportDir);
+              List<Movie> movies = MovieList.getInstance().getMovies();
+              Collections.sort(movies, new MovieComparator());
+              ex.export(movies, exportDir);
             }
             break;
           }
@@ -536,7 +541,9 @@ public class TinyMediaManagerCMD {
             }
             else {
               TvShowExporter ex = new TvShowExporter(Paths.get(t.getPath()));
-              ex.export(TvShowList.getInstance().getTvShows(), exportDir);
+              List<TvShow> tvShows = TvShowList.getInstance().getTvShows();
+              Collections.sort(tvShows, new TvShowComparator());
+              ex.export(tvShows, exportDir);
             }
             break;
           }
