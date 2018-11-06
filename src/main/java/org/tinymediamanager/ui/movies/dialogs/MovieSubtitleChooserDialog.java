@@ -149,13 +149,6 @@ public class MovieSubtitleChooserDialog extends TmmDialog {
       }
     }
 
-    for (MediaLanguages language : MediaLanguages.values()) {
-      cbLanguage.addItem(language);
-      if (language == MovieModuleManager.MOVIE_SETTINGS.getSubtitleScraperLanguage()) {
-        cbLanguage.setSelectedItem(language);
-      }
-    }
-
     // start initial search
     searchSubtitle(fileToScrape.getFileAsPath().toFile(), movieToScrape.getImdbId(), tfSearchQuery.getText());
   }
@@ -219,6 +212,12 @@ public class MovieSubtitleChooserDialog extends TmmDialog {
     panelContent.add(lblLanguageT, "2, 10, right, default");
 
     cbLanguage = new JComboBox<>();
+    for (MediaLanguages language : MediaLanguages.values()) {
+      cbLanguage.addItem(language);
+      if (language == MovieModuleManager.MOVIE_SETTINGS.getSubtitleScraperLanguage()) {
+        cbLanguage.setSelectedItem(language);
+      }
+    }
     cbLanguage.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
