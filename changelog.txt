@@ -14,6 +14,7 @@ x only set 3D flag/edition on first import #231
 x fixed statusbar layout with long texts
 x TMDB: fixed fallback language scraping for episodes
 x fixed subtitle search dialog
+x fixed Trakt.tv, updating local NFOs even when no changes
 
 Version 2.9.13
 =======================
