@@ -3,6 +3,8 @@ Version 2.9.14
 + Java 9 / 10 / 11 compatibility!
 + High Dynamic Range detection for mediafiles - you need to reload MediaInfo and then use $H in renamer
 + option to ignore SSL certificate problems #373
++ added an option for the TV show renamer: replace colons with dashes #396
+  CAUTION: this is the _NEW_ default and will be used in further versions! Activating this setting probably leads different file names from older versions and may activate a backup for some users.
 x retrying to get artwork for 5 times #369
 x fixed detection of language names
 x fixed scraping of ofdb

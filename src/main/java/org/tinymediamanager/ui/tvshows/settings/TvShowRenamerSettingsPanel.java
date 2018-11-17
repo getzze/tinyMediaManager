@@ -114,6 +114,7 @@ public class TvShowRenamerSettingsPanel extends JPanel implements HierarchyListe
   private JTextField                      tfEpisodeFilename;
   private JLabel                          lblEpisodeFileName;
   private JComboBox<LanguageStyle>        cbLanguageStyle;
+  private JHintCheckBox                   chckbxReplaceColonWithDash;
 
   public TvShowRenamerSettingsPanel() {
     setLayout(
@@ -164,8 +165,8 @@ public class TvShowRenamerSettingsPanel extends JPanel implements HierarchyListe
         new RowSpec[] { FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC,
             FormSpecs.DEFAULT_ROWSPEC, FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC,
             FormSpecs.DEFAULT_ROWSPEC, FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC,
-            FormSpecs.DEFAULT_ROWSPEC, FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-            FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, }));
+            FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.LABEL_COMPONENT_GAP_ROWSPEC,
+            FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.DEFAULT_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, }));
     {
       final JLabel lblDefault = new JLabel(BUNDLE.getString("Settings.default")); //$NON-NLS-1$
       TmmFontHelper.changeFont(lblDefault, 0.833);
@@ -205,6 +206,7 @@ public class TvShowRenamerSettingsPanel extends JPanel implements HierarchyListe
 
     chckbxAsciiReplacement = new JCheckBox(BUNDLE.getString("Settings.renamer.asciireplacement")); //$NON-NLS-1$
     chckbxAsciiReplacement.addActionListener(renamerActionListener);
+    panelRenamer.add(chckbxAsciiReplacement, "2, 15, 9, 1");
 
     chckbxSpaceReplacement = new JHintCheckBox(BUNDLE.getString("Settings.movie.renamer.spacesubstitution")); //$NON-NLS-1$
     chckbxSpaceReplacement.setHintIcon(IconManager.HINT);
@@ -220,19 +222,24 @@ public class TvShowRenamerSettingsPanel extends JPanel implements HierarchyListe
     cbSpaceReplacement = new JComboBox(spaceReplacement.toArray());
     panelRenamer.add(cbSpaceReplacement, "4, 11, fill, default");
     cbSpaceReplacement.addActionListener(renamerActionListener);
-    panelRenamer.add(chckbxAsciiReplacement, "2, 13, 9, 1");
+
+    chckbxReplaceColonWithDash = new JHintCheckBox(BUNDLE.getString("Settings.tvshow.renamer.colonreplacement")); //$NON-NLS-1$
+    chckbxReplaceColonWithDash.setHintIcon(IconManager.HINT);
+    chckbxReplaceColonWithDash.setToolTipText(BUNDLE.getString("Settings.tvshow.renamer.colonreplacement.hint")); //$NON-NLS-1$
+    chckbxReplaceColonWithDash.addActionListener(renamerActionListener);
+    panelRenamer.add(chckbxReplaceColonWithDash, "2, 13, 5, 1, left, default");
 
     txtpntAsciiHint = new JTextPane();
     txtpntAsciiHint.setText(BUNDLE.getString("Settings.renamer.asciireplacement.hint")); //$NON-NLS-1$
     TmmFontHelper.changeFont(txtpntAsciiHint, 0.833);
     txtpntAsciiHint.setBackground(UIManager.getColor("Panel.background"));
-    panelRenamer.add(txtpntAsciiHint, "2, 15, 7, 1, fill, fill");
+    panelRenamer.add(txtpntAsciiHint, "2, 17, 7, 1, fill, fill");
 
     JLabel lblLanguageStyle = new JLabel(BUNDLE.getString("Settings.renamer.language")); //$NON-NLS-1$
-    panelRenamer.add(lblLanguageStyle, "2, 17, right, default");
+    panelRenamer.add(lblLanguageStyle, "2, 19, right, default");
 
     cbLanguageStyle = new JComboBox(LanguageStyle.values());
-    panelRenamer.add(cbLanguageStyle, "4, 17, 3, 1, fill, default");
+    panelRenamer.add(cbLanguageStyle, "4, 19, 3, 1, fill, default");
 
     panelExample = new JPanel();
     panelExample.setBorder(new TitledBorder(null, BUNDLE.getString("Settings.example"), TitledBorder.LEADING, TitledBorder.TOP, null, null)); //$NON-NLS-1$
@@ -548,5 +555,10 @@ public class TvShowRenamerSettingsPanel extends JPanel implements HierarchyListe
     AutoBinding<TvShowSettings, LanguageStyle, JComboBox, Object> autoBinding_3 = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, settings,
         tvShowSettingsBeanProperty_4, cbLanguageStyle, jComboBoxBeanProperty);
     autoBinding_3.bind();
+    //
+    BeanProperty<TvShowSettings, Boolean> tvShowSettingsBeanProperty_5 = BeanProperty.create("renamerReplaceColonWithDash");
+    AutoBinding<TvShowSettings, Boolean, JCheckBox, Boolean> autoBinding_6 = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, settings,
+        tvShowSettingsBeanProperty_5, chckbxReplaceColonWithDash, jCheckBoxBeanProperty);
+    autoBinding_6.bind();
   }
 }
