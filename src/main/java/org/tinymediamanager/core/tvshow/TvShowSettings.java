@@ -88,7 +88,7 @@ public class TvShowSettings extends AbstractModelObject {
   private boolean                  asciiReplacement            = false;
   private boolean                  renamerSpaceSubstitution    = false;
   private String                   renamerSpaceReplacement     = "_";
-  private boolean                  renamerReplaceColonWithDash = true;
+  private String                   renamerColonReplacement     = "";
   private LanguageStyle            tvShowRenamerLanguageStyle  = LanguageStyle.ISO3T;
   private boolean                  syncTrakt                   = false;
   private boolean                  dvdOrder                    = false;
@@ -255,14 +255,14 @@ public class TvShowSettings extends AbstractModelObject {
     firePropertyChange("renamerSpaceSubstitution", oldValue, newValue);
   }
 
-  public boolean isRenamerReplaceColonWithDash() {
-    return renamerReplaceColonWithDash;
+  public String getRenamerColonReplacement() {
+    return renamerColonReplacement;
   }
 
-  public void setRenamerReplaceColonWithDash(boolean newValue) {
-    boolean oldValue = this.renamerReplaceColonWithDash;
-    this.renamerReplaceColonWithDash = newValue;
-    firePropertyChange("renamerReplaceColonWithDash", oldValue, newValue);
+  public void setRenamerColonReplacement(String newValue) {
+    String oldValue = this.renamerColonReplacement;
+    this.renamerColonReplacement = newValue;
+    firePropertyChange("renamerColonReplacement", oldValue, newValue);
   }
 
   public void setSyncTrakt(boolean newValue) {

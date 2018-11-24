@@ -973,9 +973,12 @@ public class TvShowRenamer {
     if (StringUtils.isNotBlank(replacement)) {
       // replaces all invalid/illegal characters with "" except the colon, which will be changed to a dash (user setting)
       // http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247%28v=vs.85%29.aspx
-      if (SETTINGS.isRenamerReplaceColonWithDash()) {
+      if ("-".equals(SETTINGS.getRenamerColonReplacement())) {
         replacingCleaned = replacingCleaned.replaceAll(": ", " - "); // nicer
         replacingCleaned = replacingCleaned.replaceAll(":", "-"); // nicer
+      }
+      else {
+        replacingCleaned = replacingCleaned.replaceAll(":", SETTINGS.getRenamerColonReplacement());
       }
 
       replacingCleaned = replacingCleaned.replaceAll("([\"\\:<>|/?*])", "");

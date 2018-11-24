@@ -92,6 +92,7 @@ public class TvShowRenamerSettingsPanel extends JPanel implements HierarchyListe
 
   private TvShowSettings                  settings         = TvShowModuleManager.SETTINGS;
   private List<String>                    spaceReplacement = new ArrayList<>(Arrays.asList("_", ".", "-"));
+  private List<String>                    colonReplacement = new ArrayList<>(Arrays.asList("", "-"));
   private EventList<TvShowRenamerExample> exampleEventList = null;
 
   /**
@@ -114,7 +115,8 @@ public class TvShowRenamerSettingsPanel extends JPanel implements HierarchyListe
   private JTextField                      tfEpisodeFilename;
   private JLabel                          lblEpisodeFileName;
   private JComboBox<LanguageStyle>        cbLanguageStyle;
-  private JHintCheckBox                   chckbxReplaceColonWithDash;
+  private JLabel                          lblColonReplacement;
+  private JComboBox                       cbColonReplacement;
 
   public TvShowRenamerSettingsPanel() {
     setLayout(
@@ -223,11 +225,13 @@ public class TvShowRenamerSettingsPanel extends JPanel implements HierarchyListe
     panelRenamer.add(cbSpaceReplacement, "4, 11, fill, default");
     cbSpaceReplacement.addActionListener(renamerActionListener);
 
-    chckbxReplaceColonWithDash = new JHintCheckBox(BUNDLE.getString("Settings.tvshow.renamer.colonreplacement")); //$NON-NLS-1$
-    chckbxReplaceColonWithDash.setHintIcon(IconManager.HINT);
-    chckbxReplaceColonWithDash.setToolTipText(BUNDLE.getString("Settings.tvshow.renamer.colonreplacement.hint")); //$NON-NLS-1$
-    chckbxReplaceColonWithDash.addActionListener(renamerActionListener);
-    panelRenamer.add(chckbxReplaceColonWithDash, "2, 13, 5, 1, left, default");
+    lblColonReplacement = new JLabel(BUNDLE.getString("Settings.tvshow.renamer.colonreplacement"));
+    lblColonReplacement.setToolTipText(BUNDLE.getString("Settings.tvshow.renamer.colonreplacement.hint"));
+    panelRenamer.add(lblColonReplacement, "2, 13, right, default");
+
+    cbColonReplacement = new JComboBox(colonReplacement.toArray());
+    panelRenamer.add(cbColonReplacement, "4, 13, fill, default");
+    cbColonReplacement.addActionListener(renamerActionListener);
 
     txtpntAsciiHint = new JTextPane();
     txtpntAsciiHint.setText(BUNDLE.getString("Settings.renamer.asciireplacement.hint")); //$NON-NLS-1$
@@ -291,6 +295,12 @@ public class TvShowRenamerSettingsPanel extends JPanel implements HierarchyListe
     int index = this.spaceReplacement.indexOf(spaceReplacement);
     if (index >= 0) {
       cbSpaceReplacement.setSelectedIndex(index);
+    }
+
+    String colonReplacement = settings.getRenamerColonReplacement();
+    index = this.colonReplacement.indexOf(colonReplacement);
+    if (index >= 0) {
+      cbColonReplacement.setSelectedIndex(index);
     }
 
     // examples
@@ -405,6 +415,9 @@ public class TvShowRenamerSettingsPanel extends JPanel implements HierarchyListe
   private void checkChanges() {
     String spaceReplacement = (String) cbSpaceReplacement.getSelectedItem();
     settings.setRenamerSpaceReplacement(spaceReplacement);
+
+    String colonReplacement = (String) cbColonReplacement.getSelectedItem();
+    settings.setRenamerColonReplacement(colonReplacement);
   }
 
   /*************************************************************
@@ -555,10 +568,5 @@ public class TvShowRenamerSettingsPanel extends JPanel implements HierarchyListe
     AutoBinding<TvShowSettings, LanguageStyle, JComboBox, Object> autoBinding_3 = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, settings,
         tvShowSettingsBeanProperty_4, cbLanguageStyle, jComboBoxBeanProperty);
     autoBinding_3.bind();
-    //
-    BeanProperty<TvShowSettings, Boolean> tvShowSettingsBeanProperty_5 = BeanProperty.create("renamerReplaceColonWithDash");
-    AutoBinding<TvShowSettings, Boolean, JCheckBox, Boolean> autoBinding_6 = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, settings,
-        tvShowSettingsBeanProperty_5, chckbxReplaceColonWithDash, jCheckBoxBeanProperty);
-    autoBinding_6.bind();
   }
 }
